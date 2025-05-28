@@ -7,8 +7,36 @@
 }
 */
 
+const FormData = require('form-data');
 const validateClientKey = require("/home/juanfer/Sthemma/gptPrompts/gptPromptsServer/src/controllers/validateClientKey.js")
 
+//----------------------------------------------------------
+const cloudinaryUpload = async (file, folder) => {
+    const formData = new FormData();
+    formData.append('file', file, { filename: 'result.png' });
+    formData.append('upload_preset', 'sthemma_img_preset');
+    formData.append('folder', folder);
+
+    //const url = URL.createObjectURL(file);
+
+    try {
+      const res = await fetch('https://api.cloudinary.com/v1_1/sthemma/image/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await res.json();
+      if (data.secure_url) {
+        return data.secure_url;
+      } else {
+        throw new Error('Upload failed');
+      }
+    } catch (err) {
+      throw new Error(err.message || 'An error occurred during upload');
+    }
+  };
+
+  //---------------------------------------------------------------
 async function sendImagePrompt(req, res) {
     const { imageUrl1, imageUrl2, prompt, clientKey } = req.body;
     const clientAccess = validateClientKey(clientKey);
@@ -25,21 +53,6 @@ async function sendImagePrompt(req, res) {
         const client = new OpenAI({
             apiKey: SKEY,
         });
-
-        /*
-        const imageFiles = [
-            "/home/juanfer/Sthemma/gptText/gptPromptsServer/src/Assets/photo1.jpg",
-            "/home/juanfer/Sthemma/gptText/gptPromptsServer/src/Assets/photo2.jpg",
-        ];
-        
-        const images = await Promise.all(
-            imageFiles.map(async (file) =>
-                await toFile(fs.createReadStream(file), null, {
-                    type: "image/jpeg",
-                })
-            ),
-        );
-        */
 
         let imageUrls = [];
         imageUrl1 && imageUrls.push(imageUrl1);
@@ -68,12 +81,15 @@ async function sendImagePrompt(req, res) {
         const image_base64 = rsp.data[0].b64_json;
         const image_bytes = Buffer.from(image_base64, "base64");
         fs.writeFileSync("/home/juanfer/Sthemma/gptPrompts/gptPromptsServer/src/Assets/result.png", image_bytes);
+console.log("uploading result to Cloudinary");
 
-        res.status(200).send("Image is ready!");
+const cloudinaryUrl = await cloudinaryUpload(image_bytes, 'callisto/design');
+console.log("cloudinary result url:", cloudinaryUrl);
+        res.status(200).send(cloudinaryUrl);
     } else {
         console.log("Client access denied");
         res.status(500).send("Client access denied");
     }
-}
+    }
 
 module.exports = sendImagePrompt
