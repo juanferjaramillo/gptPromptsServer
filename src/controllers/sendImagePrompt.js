@@ -11,7 +11,7 @@ const FormData = require('form-data');
 const validateClientKey = require("/home/juanfer/Sthemma/gptPrompts/gptPromptsServer/src/controllers/validateClientKey.js")
 
 //----------------------------------------------------------
-const cloudinaryUpload = async (file, folder) => {
+const cloudinaryUpload = async (file) => {
     const formData = new FormData();
     formData.append('file', file, { filename: 'result.png' });
     formData.append('upload_preset', 'sthemma_img_preset');
@@ -77,9 +77,7 @@ async function sendImagePrompt(req, res) {
         });
 
         console.log("Response received");
-        // Save the image to a file
-        const image_base64 = rsp.data[0].b64_json;
-        const image_bytes = Buffer.from(image_base64, "base64");
+        // Save the image to a sthemma_img_presetmage_base64, "base64");
         fs.writeFileSync("/home/juanfer/Sthemma/gptPrompts/gptPromptsServer/src/Assets/result.png", image_bytes);
 console.log("uploading result to Cloudinary");
 
