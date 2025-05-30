@@ -80,7 +80,7 @@ async function sendImagePrompt(req, res) {
     // Save the image to a sthemma_img_preset
     const image_base64 = rsp.data[0].b64_json;
     const imageBytes = Buffer.from(image_base64, "base64");
-    fs.writeFileSync("/home/juanfer/Sthemma/gptPrompts/gptPromptsServer/src/Assets/result.png", imageBytes);
+    //fs.writeFileSync("/home/juanfer/Sthemma/gptPrompts/gptPromptsServer/src/Assets/result.png", imageBytes);
   
     console.log("uploading result to Cloudinary");
     const form = new FormData();
