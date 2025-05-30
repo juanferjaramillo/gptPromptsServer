@@ -83,8 +83,9 @@ async function sendImagePrompt(req, res) {
     //fs.writeFileSync("/home/juanfer/Sthemma/gptPrompts/gptPromptsServer/src/Assets/result.png", imageBytes);
   
     console.log("uploading result to Cloudinary");
+    const now = new Date();
     const form = new FormData();
-    form.append('file', Buffer.from(imageBytes), { filename: 'resultX.png' }); // or base64 string
+    form.append('file', Buffer.from(imageBytes), { filename: `result${now}.png` }); // or base64 string
     form.append('upload_preset', 'sthemma_img_preset'); // must match Cloudinary
     form.append('folder', 'callisto/design'); // optional
 
