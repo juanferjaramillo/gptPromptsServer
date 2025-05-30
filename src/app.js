@@ -18,7 +18,9 @@ server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
 server.use(express.json());
 server.use(cors()); // Allow all origins
+
 //server.use(morgan("dev"));
+/*
 server.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Credentials", "true");
@@ -30,6 +32,7 @@ server.use((req, res, next) => {
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE, PATCH");
     next();
 });
+*/
 server.use("/", routes);
 server.use((err, req, res, next) => {
     // Error catching endware.
