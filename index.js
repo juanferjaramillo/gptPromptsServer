@@ -1,9 +1,7 @@
 const gptServer = require("./src/app.js");
 //const { sfgroup_seq } = require("./src/sfgroup_db.js");
 //const { sthemma_seq } = require("./src/sthemma_db.js");
-const serverPort = process.env.PORT || 3000;
-
-// Syncing all the models at once.
+const serverPort = process.env.PORT || 3001
 // conn.sync({ force: true }).then( async() => {
 
 // console.log(`starting callisto server now...`);
@@ -13,7 +11,7 @@ const serverPort = process.env.PORT || 3000;
   //.then(gbarco_seq.sync({ alter: true }))
   //.then(sthemma_seq.sync({ alter: true }))
   //.then(async () => {
-    gptServer.listen(serverPort,"0.0.0.0", () => {
+    gptServer.listen(serverPort, () => {
       console.log(`gpt server running at ${serverPort}`); // eslint-disable-line no-console
     });
   //});
