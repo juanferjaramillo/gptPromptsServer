@@ -8,7 +8,7 @@
 */
 
 const FormData = require('form-data');
-const validateClientKey = require("/home/juanfer/Sthemma/gptPrompts/gptPromptsServer/src/controllers/validateClientKey.js")
+const validateClientKey = require("./validateClientKey.js")
 
 //----------------------------------------------------------
 const cloudinaryUpload = async (file) => {

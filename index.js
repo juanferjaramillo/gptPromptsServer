@@ -11,7 +11,7 @@ const serverPort = process.env.PORT || 3001
   //.then(gbarco_seq.sync({ alter: true }))
   //.then(sthemma_seq.sync({ alter: true }))
   //.then(async () => {
-    gptServer.listen(serverPort, () => {
+    gptServer.listen(serverPort,"0.0.0.0", () => {
       console.log(`gpt server running at ${serverPort}`); // eslint-disable-line no-console
     });
   //});
