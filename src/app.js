@@ -1,6 +1,7 @@
 console.log('runnng app.js - configuring express server');
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 //const morgan = require("morgan");
 const routes = require("./routes/routes.js");
 // require("./sfgroup_db.js");
