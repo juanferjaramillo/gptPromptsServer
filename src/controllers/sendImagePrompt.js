@@ -71,7 +71,7 @@ async function sendImagePrompt(req, res) {
 
     console.log("sending request to OpenAI");
     const rsp = await client.images.edit({
-      model: "gpt-image-1",
+      model: "gpt-image-1",  //DALL-E 3
       image: images,
       prompt: prompt,
     });
