@@ -10,32 +10,6 @@
 const FormData = require('form-data');
 const validateClientKey = require("./validateClientKey.js")
 
-//----------------------------------------------------------
-const cloudinaryUpload = async (file) => {
-  const formData = new FormData();
-  formData.append('file', file, { filename: 'result.png' });
-  formData.append('upload_preset', 'sthemma_img_preset');
-  formData.append('folder', folder);
-
-  //const url = URL.createObjectURL(file);
-
-  try {
-    const res = await fetch('https://api.cloudinary.com/v1_1/sthemma/image/upload', {
-      method: 'POST',
-      body: formData
-    });
-
-    const data = await res.json();
-    if (data.secure_url) {
-      return data.secure_url;
-    } else {
-      throw new Error('Upload failed');
-    }
-  } catch (err) {
-    throw new Error(err.message || 'An error occurred during upload');
-  }
-};
-
 //---------------------------------------------------------------
 async function sendImagePrompt(req, res) {
   const { imageUrl1, imageUrl2, prompt, clientKey } = req.body;
@@ -43,7 +17,7 @@ async function sendImagePrompt(req, res) {
 
   if (clientAccess) {
     console.log("Client access allowed");
-    const fs = require('fs');
+    //const fs = require('fs');
     const OpenAI = require("openai");
     const { toFile } = require("openai");
     const streamifier = require("streamifier");
@@ -85,8 +59,8 @@ async function sendImagePrompt(req, res) {
     console.log("uploading result to Cloudinary");
     const now = new Date();
     const form = new FormData();
-    form.append('file', Buffer.from(imageBytes), { filename: `result${now}.png` }); // or base64 string
-    form.append('upload_preset', 'sthemma_img_preset'); // must match Cloudinary
+    form.append('file', Buffer.from(imageBytes), { filename: `result${now}.png` });
+    form.append('upload_preset', 'sthemma_img_preset'); 
     form.append('folder', 'callisto/design'); // optional
 
     try {
